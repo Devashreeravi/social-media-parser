@@ -1,0 +1,7 @@
+flask
+selenium
+reportlab
+webdriver-manager
+flask
+gunicorn
+werkzeug

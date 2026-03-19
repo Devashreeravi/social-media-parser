@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Social Media Evidence Parser</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="home-page">
+
+    <div class="main-container">
+        <div class="form-card">
+            <h1>🛡️ Social Media Evidence Parser</h1>
+            <p class="subtitle">Cyber Investigation Support Tool</p>
+
+            <form action="/process" method="POST" enctype="multipart/form-data">
+                <div class="form-grid">
+                    <input type="text" name="case_id" placeholder="Case ID" required>
+                    <input type="text" name="officer_name" placeholder="Officer Name" required>
+
+                    <input type="text" name="suspect_name" placeholder="Suspect Name" required>
+                    <select name="platform" required>
+                        <option value="">Select Platform</option>
+                        <option>Facebook</option>
+                        <option>Instagram</option>
+                        <option>Twitter / X</option>
+                        <option>Telegram</option>
+                        <option>WhatsApp</option>
+                        <option>Google Account</option>
+                    </select>
+
+                    <input type="text" name="profile_url" placeholder="Profile URL / Link" required>
+                    <input type="text" name="username" placeholder="Username (try: rahul123 / scammer01 / testuser)" required>
+
+                    <input type="file" name="profile_image" accept="image/*">
+                </div>
+
+                <div class="btn-center">
+                    <button type="submit" class="main-btn">📸 Capture Evidence</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
