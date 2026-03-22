@@ -2,68 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Evidence Folder Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Folder</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body class="result-page">
+<body>
 
-    <div class="result-container">
-        <h1 class="result-title">📁 Social Media Evidence Folder</h1>
+    <div class="evidence-container">
+        <h1>📁 Social Media Evidence Folder</h1>
 
-        <div class="top-section">
-            <div class="profile-card">
+        {% if person %}
+        <div class="evidence-card">
+
+            <!-- Profile Picture -->
+            <div class="section">
                 <h2>👤 Profile Picture</h2>
-
-                {% if image_filename %}
-                    <img src="{{ url_for('static', filename='uploads/' + image_filename) }}" alt="Profile Picture" class="profile-img">
-                {% else %}
-                    <img src="{{ url_for('static', filename='default_profile.png') }}" alt="Default Profile" class="profile-img">
-                {% endif %}
+                <img src="{{ url_for('static', filename=person.image) }}" alt="Profile Picture" class="profile-img">
+                <p class="default-text">Default Profile</p>
             </div>
 
-            <div class="details-card">
+            <!-- Case & Account Details -->
+            <div class="section">
                 <h2>📋 Case & Account Details</h2>
-                <p><strong>Case ID:</strong> {{ case_id }}</p>
-                <p><strong>Officer Name:</strong> {{ officer_name }}</p>
-                <p><strong>Suspect Name:</strong> {{ suspect_name }}</p>
-                <p><strong>Platform:</strong> {{ platform }}</p>
-                <p><strong>Profile URL:</strong> {{ profile_url }}</p>
-                <p><strong>Username / ID:</strong> {{ username }}</p>
+                <p><strong>Case ID:</strong> {{ person.case_id }}</p>
+                <p><strong>Officer Name:</strong> {{ person.officer_name }}</p>
+                <p><strong>Suspect Name:</strong> {{ person.name }}</p>
+                <p><strong>Platform:</strong> {{ person.platform }}</p>
+                <p><strong>Profile URL:</strong> 
+                    <a href="{{ person.profile_url }}" target="_blank">{{ person.profile_url }}</a>
+                </p>
+                <p><strong>Username / ID:</strong> {{ person.social_id }}</p>
             </div>
-        </div>
 
-        <div class="info-section">
-            <div class="info-card">
+            <!-- Auto Person Information -->
+            <div class="section">
                 <h2>ℹ️ Auto Person Information</h2>
-                <p><strong>Detected Name:</strong> {{ person_info.name }}</p>
-                <p><strong>Contact:</strong> {{ person_info.contact }}</p>
-                <p><strong>Followers / Friends:</strong> {{ person_info.followers }}</p>
-                <p><strong>Following:</strong> {{ person_info.following }}</p>
-                <p><strong>Bio:</strong> {{ person_info.bio }}</p>
+                <p><strong>Detected Name:</strong> {{ person.detected_name }}</p>
+                <p><strong>Contact:</strong> {{ person.contact }}</p>
+                <p><strong>Followers / Friends:</strong> {{ person.followers }}</p>
+                <p><strong>Following:</strong> {{ person.following }}</p>
+                <p><strong>Bio:</strong> {{ person.bio }}</p>
             </div>
 
-            <div class="info-card">
+            <!-- Risk Analysis -->
+            <div class="section risk-box">
                 <h2>🚨 Risk Analysis</h2>
-                <p><strong>Risk Level:</strong> {{ person_info.risk_level }}</p>
-                <p><strong>Suspicious History:</strong> {{ person_info.history }}</p>
-                <p><strong>Keywords Found:</strong> {{ person_info.keywords }}</p>
+                <p><strong>Risk Level:</strong> 
+                    <span class="
+                        {% if person.risk_level|lower == 'high' %}
+                            risk-high
+                        {% elif person.risk_level|lower == 'medium' %}
+                            risk-medium
+                        {% else %}
+                            risk-low
+                        {% endif %}
+                    ">
+                        {{ person.risk_level }}
+                    </span>
+                </p>
+                <p><strong>Suspicious History:</strong> {{ person.suspicious_history }}</p>
+                <p><strong>Keywords Found:</strong> {{ person.keywords }}</p>
+            </div>
+
+            <!-- Evidence Screenshots -->
+            <div class="section">
+                <h2>📸 Evidence Screenshots</h2>
+
+                <ul class="screenshot-list">
+                    <li>{{ person.screenshot1 }}</li>
+                    <li>{{ person.screenshot2 }}</li>
+                    <li>{{ person.screenshot3 }}</li>
+                </ul>
+
+                <div class="screenshot-preview">
+                    <img src="{{ url_for('static', filename=person.screenshot1) }}" alt="Screenshot 1" class="shot-img">
+                    <img src="{{ url_for('static', filename=person.screenshot2) }}" alt="Screenshot 2" class="shot-img">
+                    <img src="{{ url_for('static', filename=person.screenshot3) }}" alt="Screenshot 3" class="shot-img">
+                </div>
+
+                <p class="note-text">Screenshot files are saved inside the <strong>screenshots</strong> folder.</p>
+            </div>
+
+            <!-- Buttons -->
+            <div class="action-buttons">
+                <a href="{{ url_for('download_report', name=person.name) }}" class="pdf-btn">⬇ Download PDF Report</a>
+                <a href="/" class="back-btn">⬅ Back to Home</a>
+            </div>
+
+        </div>
+
+        {% else %}
+        <div class="evidence-card">
+            <h2>No Record Found ❌</h2>
+            <p>No data found for: <strong>{{ search_name }}</strong></p>
+            <p>Try:</p>
+            <p>Rahul Patil / Priya Sharma / Amit Verma</p>
+            <div class="action-buttons">
+                <a href="/" class="back-btn">⬅ Back to Home</a>
             </div>
         </div>
-
-        <div class="info-card">
-            <h2>📸 Evidence Screenshots</h2>
-            <ul class="screenshot-list">
-                {% for shot in screenshots %}
-                    <li>{{ shot }}</li>
-                {% endfor %}
-            </ul>
-            <p class="note">Screenshot files are saved inside the <strong>screenshots</strong> folder.</p>
-        </div>
-
-        <div class="button-row">
-            <a href="/download/{{ pdf_filename }}" class="action-btn">⬇ Download PDF Report</a>
-            <a href="/" class="action-btn secondary-btn">⬅ Back to Home</a>
-        </div>
+        {% endif %}
     </div>
 
 </body>

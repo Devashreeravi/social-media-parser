@@ -2,43 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Social Media Evidence Parser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Investigation Tool</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body class="home-page">
+<body>
 
-    <div class="main-container">
-        <div class="form-card">
-            <h1>🛡️ Social Media Evidence Parser</h1>
-            <p class="subtitle">Cyber Investigation Support Tool</p>
+    <div class="container">
+        <h1>🔍 Social Media Investigation Tool</h1>
+        <p>Open social media sources for cyber investigation support</p>
 
-            <form action="/process" method="POST" enctype="multipart/form-data">
-                <div class="form-grid">
-                    <input type="text" name="case_id" placeholder="Case ID" required>
-                    <input type="text" name="officer_name" placeholder="Officer Name" required>
-
-                    <input type="text" name="suspect_name" placeholder="Suspect Name" required>
-                    <select name="platform" required>
-                        <option value="">Select Platform</option>
-                        <option>Facebook</option>
-                        <option>Instagram</option>
-                        <option>Twitter / X</option>
-                        <option>Telegram</option>
-                        <option>WhatsApp</option>
-                        <option>Google Account</option>
-                    </select>
-
-                    <input type="text" name="profile_url" placeholder="Profile URL / Link" required>
-                    <input type="text" name="username" placeholder="Username (try: rahul123 / scammer01 / testuser)" required>
-
-                    <input type="file" name="profile_image" accept="image/*">
-                </div>
-
-                <div class="btn-center">
-                    <button type="submit" class="main-btn">📸 Capture Evidence</button>
-                </div>
-            </form>
+        <div class="button-group">
+            <a href="https://www.facebook.com" target="_blank" class="btn">Facebook</a>
+            <a href="https://www.instagram.com" target="_blank" class="btn">Instagram</a>
+            <a href="https://x.com" target="_blank" class="btn">Twitter / X</a>
+            <a href="https://web.telegram.org" target="_blank" class="btn">Telegram</a>
+            <a href="https://web.whatsapp.com" target="_blank" class="btn">WhatsApp</a>
+            <a href="https://myaccount.google.com" target="_blank" class="btn">Google Account</a>
         </div>
+
+        <br><br>
+
+        <form action="/result" method="POST">
+            <input type="text" name="suspect_name" placeholder="Enter Suspect Name (e.g. Rahul Patil)" required>
+            <br><br>
+            <button type="submit" class="result-btn">View Investigation Result</button>
+        </form>
     </div>
 
 </body>
